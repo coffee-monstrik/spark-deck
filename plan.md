@@ -8,12 +8,12 @@ Goal: Build the two-player Spark Deck game per project_description.md using Next
 - Add TypeScript types plus a small runtime validator to guard against malformed decks.
 - Tests: unit test that loads a sample deck, validates shape, and confirms categories are unique and cards map to known categories.
 
-## Step 2: Implement Landing page
+## Step 2: Implement Landing page - done!
 - UI: greeting, player name inputs (defaults Me/You), deck selection cards with description and highlight, Start Game button.
 - Logic: on submit, load chosen deck, initialize store (copy deck data, shuffle categories/cards, pick 4 categories), set current player, reset log/answered counters.
 - Tests: start flow sets state correctly, prevents start without deck, respects default names.
 
-## Step 3: Game state store and persistence
+## Step 3: Game state store and persistence - done!
 - Create a client-side game store (React context + reducer) holding players, selected deck copy, current player, answered count, action log, and flags for winning/stop states.
 - Implement actions: start game, select category, draw card, log action, mark card answered, rotate player, continue/stop, reset.
 - Persist/hydrate to sessionStorage; ensure reset clears storage.

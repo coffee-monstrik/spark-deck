@@ -13,8 +13,12 @@ export type CategoryStack = {
   cards: DeckCard[];
 };
 
+export type GameStatus = "idle" | "ready" | "stopped";
+
+export type WinState = "none" | "drawn-exhausted" | "deck-finished";
+
 export type GameState = {
-  status: "idle" | "ready";
+  status: GameStatus;
   deck: {
     id: string;
     name: string;
@@ -25,8 +29,12 @@ export type GameState = {
   currentPlayer: PlayerId;
   drawnCategories: CategoryStack[];
   remainingCategories: CategoryStack[];
+  selectedCategory: string | null;
+  currentCard: DeckCard | null;
   answeredCount: number;
   log: string[];
+  winState: WinState;
+  stopped: boolean;
 };
 
 export type StartConfig = {
@@ -102,8 +110,12 @@ export const createInitialGameState = (config: StartConfig): GameState => {
     currentPlayer: "player1",
     drawnCategories,
     remainingCategories,
+    selectedCategory: null,
+    currentCard: null,
     answeredCount: 0,
     log: [],
+    winState: "none",
+    stopped: false,
   };
 };
 
@@ -129,6 +141,30 @@ export const initialEmptyState: GameState = {
   currentPlayer: "player1",
   drawnCategories: [],
   remainingCategories: [],
+  selectedCategory: null,
+  currentCard: null,
   answeredCount: 0,
   log: [],
+  winState: "none",
+  stopped: false,
+};
+
+const totalCards = (stacks: CategoryStack[]): number =>
+  stacks.reduce((count, stack) => count + stack.cards.length, 0);
+
+export const evaluateWinState = (state: GameState): WinState => {
+  const cardsRemaining = totalCards(state.drawnCategories) + totalCards(state.remainingCategories);
+  if (cardsRemaining === 0) {
+    return "deck-finished";
+  }
+
+  const hasDrawnCategories = state.drawnCategories.length > 0;
+  const drawnExhausted =
+    hasDrawnCategories && state.drawnCategories.every((stack) => stack.cards.length === 0);
+
+  if (drawnExhausted) {
+    return "drawn-exhausted";
+  }
+
+  return "none";
 };

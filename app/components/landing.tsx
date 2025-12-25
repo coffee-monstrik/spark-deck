@@ -6,8 +6,6 @@ import { Deck } from "@/lib/decks/schema";
 import { useGameStore } from "@/lib/game/store";
 import { canStartGame } from "@/lib/game/state";
 
-import styles from "./landing.module.css";
-
 type Props = {
   decks: Deck[];
 };
@@ -45,26 +43,25 @@ export const Landing = ({ decks }: Props) => {
   };
 
   return (
-    <div className={`${styles.page}`}>
-      <section className={styles.hero}>
-        <p className={styles.tagline}>Spark Deck</p>
-        <h1 className={styles.title}>💌 Welcome to Spark Deck!</h1>
-        <p className={styles.subtitle}>
-          This is engaging questions game to spark meaningful conversations. Start a friendly
+    <div className="landing-page">
+      <section className="landing-hero">
+        <p className="landing-tagline">Spark Deck</p>
+        <h1 className="landing-title">💌 Welcome to Spark Deck!</h1>
+        <p className="landing-subtitle">
+          This is engaging "game" to spark meaningful conversations. Start a friendly
           competition while getting to know each other.
           Name yourself, choose the deck and let the game begin!
         </p>
-        <p className={styles.rules}>
+        <p className="landing-rules">
           You will pick category for each
           other to answer a random questions from it.
           First to draw 4 categories with no question can claim the win but will you stop there?
         </p>
       </section>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.inputsRow}>
-          <label className={styles.input}>
-            <span>Player 1</span>
+      <form className="landing-form" onSubmit={handleSubmit}>
+        <div className="landing-inputs">
+          <label className="landing-input">
             <input
               value={playerOne}
               onChange={(event) => setPlayerOne(event.target.value)}
@@ -72,8 +69,7 @@ export const Landing = ({ decks }: Props) => {
               autoComplete="off"
             />
           </label>
-          <label className={styles.input}>
-            <span>Player 2</span>
+          <label className="landing-input">
             <input
               value={playerTwo}
               onChange={(event) => setPlayerTwo(event.target.value)}
@@ -83,13 +79,13 @@ export const Landing = ({ decks }: Props) => {
           </label>
         </div>
 
-        <div className={styles.decksSection}>
-          <div className={styles.decksHeader}>
+        <div className="landing-decks">
+          <div className="landing-decks-header">
             <h2>Choose a deck</h2>
             <p>Select a mood to theme your questions and categories.</p>
           </div>
 
-          <div className={styles.deckGrid}>
+          <div className="landing-deck-grid">
             {decks.map((deck) => {
               const isSelected = deck.id === selectedDeckId;
               const accent = deck.theme.accent ?? deck.theme.primary;
@@ -98,7 +94,7 @@ export const Landing = ({ decks }: Props) => {
                 <button
                   key={deck.id}
                   type="button"
-                  className={`${styles.deckCard} ${isSelected ? styles.deckCardSelected : ""}`}
+                  className={`landing-deck-card ${isSelected ? "landing-deck-card--selected" : ""}`}
                   onClick={() => {
                     setSelectedDeckId(deck.id);
                     setError("");
@@ -108,28 +104,31 @@ export const Landing = ({ decks }: Props) => {
                     background: isSelected ? undefined : "#fffdf9",
                   }}
                 >
-                  <div className={styles.deckHeader}>
-                    <div className={styles.deckTitle}>
-                      <span className={styles.deckSwatch} style={{ backgroundColor: accent }} />
+                  <div className="landing-deck-header">
+                    <div className="landing-deck-title">
+                      <span
+                        className="landing-deck-swatch"
+                        style={{ backgroundColor: accent }}
+                      />
                       <div>
-                        <p className={styles.deckName}>{deck.name}</p>
-                        <p className={styles.deckId}>{deck.id}</p>
+                        <p className="landing-deck-name">{deck.name}</p>
+                        <p className="landing-deck-id">{deck.id}</p>
                       </div>
                     </div>
                   </div>
-                  <p className={styles.deckDescription}>{deck.description}</p>
+                  <p className="landing-deck-description">{deck.description}</p>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <p className="landing-error">{error}</p>}
 
-        <div className={styles.actions}>
+        <div className="landing-actions">
           <button
             type="submit"
-            className={styles.primary}
+            className="landing-primary"
             disabled={!canStartGame(selectedDeck)}
           >
             Start Game

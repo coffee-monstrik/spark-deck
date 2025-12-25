@@ -7,6 +7,9 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
 body {
@@ -14,4 +17,223 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   min-height: 100vh;
+}
+
+.landing-page {
+  padding: 32px 20px 48px;
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.landing-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.landing-tagline {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  font-weight: 700;
+  color: #e11d48;
+}
+
+.landing-title {
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.landing-subtitle {
+  color: #7a2637;
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 700px;
+}
+
+.landing-rules {
+  margin-top: 6px;
+  color: #8d4356;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.landing-form {
+  background: #fff1e6;
+  border: 1px solid #f4d2c9;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.landing-inputs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.landing-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #2b0b14;
+}
+
+.landing-input input {
+  border: 1px solid #f0c7c4;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 15px;
+  color: #2b0b14;
+  background: #fffdf9;
+}
+
+.landing-input input:focus {
+  outline: 2px solid #f26b7b;
+  border-color: #f26b7b;
+}
+
+.landing-decks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.landing-decks-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #2b0b14;
+}
+
+.landing-decks-header p {
+  margin: 4px 0 0;
+  color: #7a2637;
+  font-size: 14px;
+}
+
+.landing-deck-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.landing-deck-card {
+  width: 100%;
+  text-align: left;
+  border: 1px solid #f0c7c4;
+  border-radius: 14px;
+  padding: 14px;
+  background: #fffdf9;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: box-shadow 150ms ease, transform 150ms ease, border-color 150ms ease;
+}
+
+.landing-deck-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(43, 11, 20, 0.12);
+}
+
+.landing-deck-card--selected {
+  box-shadow: 0 12px 26px rgba(225, 29, 72, 0.28);
+  background: linear-gradient(135deg, #fff5f5, #ffe7e6);
+  border-color: #e11d48;
+}
+
+.landing-deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.landing-deck-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.landing-deck-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #7a2637;
+}
+
+.landing-deck-name {
+  font-weight: 700;
+  color: #2b0b14;
+}
+
+.landing-deck-id {
+  font-size: 12px;
+  color: #8d4356;
+}
+
+.landing-deck-description {
+  margin: 0;
+  color: #7a2637;
+  line-height: 1.4;
+}
+
+.landing-error {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.landing-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.landing-primary {
+  background: linear-gradient(135deg, #e11d48, #f26b7b);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.landing-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(225, 29, 72, 0.3);
+}
+
+.landing-primary:disabled {
+  background: #f5d8d2;
+  color: #a86b7a;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@media (min-width: 720px) {
+  .landing-page {
+    padding: 48px 32px 72px;
+  }
+
+  .landing-form {
+    padding: 28px;
+    gap: 24px;
+  }
+
+  .landing-inputs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .landing-deck-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
