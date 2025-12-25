@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Deck } from "@/lib/decks/schema";
 import { useGameStore } from "@/lib/game/store";
@@ -12,6 +13,7 @@ type Props = {
 
 export const Landing = ({ decks }: Props) => {
   const { dispatch } = useGameStore();
+  const router = useRouter();
   const [playerOne, setPlayerOne] = useState("Me");
   const [playerTwo, setPlayerTwo] = useState("You");
   const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null);
@@ -39,6 +41,7 @@ export const Landing = ({ decks }: Props) => {
       },
     });
 
+    router.push("/categories");
     setError("");
   };
 

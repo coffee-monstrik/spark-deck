@@ -219,6 +219,151 @@ body {
   box-shadow: none;
 }
 
+.game-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--deck-surface, #f8f9fa);
+  color: var(--deck-text, #0f172a);
+  font-family: var(--deck-font, var(--font-geist-sans)), system-ui, sans-serif;
+}
+
+.game-surface {
+  flex: 1;
+  max-width: 1024px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 24px 18px 80px;
+  position: relative;
+}
+
+.game-stop-rail {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.game-stop-link,
+.stop-control-button {
+  background: transparent;
+  color: var(--deck-text, #0f172a);
+  border: 1px dashed var(--deck-disabled, #ced4da);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+}
+
+.game-stop-link:hover,
+.stop-control-button:hover {
+  border-color: var(--deck-primary, #0b7285);
+  color: var(--deck-primary, #0b7285);
+  background: rgba(11, 114, 133, 0.06);
+}
+
+.game-footer {
+  background: var(--deck-primary, #0b7285);
+  color: white;
+  padding: 16px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  color: var(--deck-primary, #0b7285);
+  margin-bottom: 6px;
+}
+
+.page-title {
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.answered-chip {
+  border: 1px solid var(--deck-disabled, #ced4da);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  background: white;
+}
+
+.game-placeholder {
+  background: white;
+  border: 1px dashed var(--deck-disabled, #ced4da);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.game-placeholder h2 {
+  margin: 0;
+}
+
+.game-placeholder p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.placeholder-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primary-link,
+.secondary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 10px 16px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.primary-link {
+  background: var(--deck-primary, #0b7285);
+  color: white;
+  box-shadow: 0 8px 16px rgba(11, 114, 133, 0.2);
+}
+
+.primary-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 22px rgba(11, 114, 133, 0.3);
+}
+
+.secondary-link {
+  background: var(--deck-surface, #f8f9fa);
+  color: var(--deck-text, #0f172a);
+  border: 1px solid var(--deck-disabled, #ced4da);
+}
+
+.secondary-link:hover {
+  background: white;
+  transform: translateY(-1px);
+}
+
+.game-inline-stop {
+  margin-top: 16px;
+}
+
 @media (min-width: 720px) {
   .landing-page {
     padding: 48px 32px 72px;
