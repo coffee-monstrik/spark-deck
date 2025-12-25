@@ -1,0 +1,115 @@
+{
+  "id": "spark-seed",
+  "name": "Spark Seed",
+  "description": "Warm, curious prompts to open up a two-player conversation.",
+  "theme": {
+    "primary": "#0B7285",
+    "secondary": "#3BC9DB",
+    "disabled": "#CED4DA",
+    "surface": "#F8F9FA",
+    "text": "#0F172A",
+    "categoriesColors": ["#0B7285", "#3BC9DB", "#FFD43B", "#845EF7"],
+    "accent": "#FFD43B",
+    "fontFamily": "'Space Grotesk', 'Helvetica Neue', Arial, sans-serif"
+  },
+  "categories": [
+    "Icebreakers",
+    "Reflections",
+    "Hypotheticals",
+    "Gratitude",
+    "Future Plans",
+    "Wild Cards"
+  ],
+  "cards": [
+    {
+      "id": "ice-1",
+      "category": "Icebreakers",
+      "text": "Share one word that describes your week so far."
+    },
+    {
+      "id": "ice-2",
+      "category": "Icebreakers",
+      "text": "What song would you start this session with?"
+    },
+    {
+      "id": "ice-3",
+      "category": "Icebreakers",
+      "text": "Pick an emoji for your mood right now and explain why."
+    },
+    {
+      "id": "ref-1",
+      "category": "Reflections",
+      "text": "What is one lesson you keep relearning?"
+    },
+    {
+      "id": "ref-2",
+      "category": "Reflections",
+      "text": "Share a small win from the past month."
+    },
+    {
+      "id": "ref-3",
+      "category": "Reflections",
+      "text": "What habit has quietly helped you the most this year?"
+    },
+    {
+      "id": "hyp-1",
+      "category": "Hypotheticals",
+      "text": "If you had an extra free hour daily, how would you spend it?"
+    },
+    {
+      "id": "hyp-2",
+      "category": "Hypotheticals",
+      "text": "Would you rather explore the deep sea or outer space together?"
+    },
+    {
+      "id": "hyp-3",
+      "category": "Hypotheticals",
+      "text": "If you could borrow a skill for a day, what would it be?"
+    },
+    {
+      "id": "grat-1",
+      "category": "Gratitude",
+      "text": "Name something small you appreciate but rarely mention."
+    },
+    {
+      "id": "grat-2",
+      "category": "Gratitude",
+      "text": "Who helped you recently and how?"
+    },
+    {
+      "id": "grat-3",
+      "category": "Gratitude",
+      "text": "What is a routine you are grateful for?"
+    },
+    {
+      "id": "future-1",
+      "category": "Future Plans",
+      "text": "What is one thing you want to try together this season?"
+    },
+    {
+      "id": "future-2",
+      "category": "Future Plans",
+      "text": "What are you looking forward to in the next 30 days?"
+    },
+    {
+      "id": "future-3",
+      "category": "Future Plans",
+      "text": "If we set a mini-challenge for next week, what would it be?"
+    },
+    {
+      "id": "wild-1",
+      "category": "Wild Cards",
+      "text": "Make up a two-line story together, one line each."
+    },
+    {
+      "id": "wild-2",
+      "category": "Wild Cards",
+      "text": "Swap phones and take a single photo that captures the vibe right now."
+    },
+    {
+      "id": "wild-3",
+      "category": "Wild Cards",
+      "text": "Teach me a tiny trick or shortcut you use all the time."
+    }
+  ]
+}

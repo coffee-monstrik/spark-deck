@@ -1,0 +1,99 @@
+{
+  "id": "spark-deep-dive",
+  "name": "Spark Deep Dive",
+  "description": "Reflective prompts for slower, thoughtful sessions.",
+  "theme": {
+    "primary": "#1F4B99",
+    "secondary": "#3D7FFF",
+    "disabled": "#C5CCE0",
+    "surface": "#F5F7FB",
+    "text": "#0B1021",
+    "categoriesColors": ["#1F4B99", "#3D7FFF", "#FFB347", "#5F67C1"],
+    "accent": "#FFB347",
+    "fontFamily": "'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif"
+  },
+  "categories": [
+    "Origins",
+    "Challenges",
+    "Values",
+    "Connections",
+    "Wild Cards"
+  ],
+  "cards": [
+    {
+      "id": "origins-1",
+      "category": "Origins",
+      "text": "What experience shaped a core part of who you are?"
+    },
+    {
+      "id": "origins-2",
+      "category": "Origins",
+      "text": "Who is someone from your past you wish you could thank?"
+    },
+    {
+      "id": "origins-3",
+      "category": "Origins",
+      "text": "What tradition from your childhood would you keep forever?"
+    },
+    {
+      "id": "challenges-1",
+      "category": "Challenges",
+      "text": "What recent obstacle are you quietly proud of overcoming?"
+    },
+    {
+      "id": "challenges-2",
+      "category": "Challenges",
+      "text": "What do you tend to avoid that usually helps when you face it?"
+    },
+    {
+      "id": "challenges-3",
+      "category": "Challenges",
+      "text": "What is a skill you are rebuilding after a setback?"
+    },
+    {
+      "id": "values-1",
+      "category": "Values",
+      "text": "Which value guides your decisions when things get messy?"
+    },
+    {
+      "id": "values-2",
+      "category": "Values",
+      "text": "What belief have you changed your mind about recently?"
+    },
+    {
+      "id": "values-3",
+      "category": "Values",
+      "text": "Where do you draw the line between ambition and balance?"
+    },
+    {
+      "id": "connections-1",
+      "category": "Connections",
+      "text": "Who makes you feel most understood, and why?"
+    },
+    {
+      "id": "connections-2",
+      "category": "Connections",
+      "text": "When do you feel most connected to people around you?"
+    },
+    {
+      "id": "connections-3",
+      "category": "Connections",
+      "text": "What is a small gesture that signals care to you?"
+    },
+    {
+      "id": "wild-4",
+      "category": "Wild Cards",
+      "text": "Offer one encouragement for the other player right now."
+    },
+    {
+      "id": "wild-5",
+      "category": "Wild Cards",
+      "text": "Share a photo or screenshot that captures your current season."
+    },
+    {
+      "id": "wild-6",
+      "category": "Wild Cards",
+      "text": "Each write down a word; reveal at the same time and connect them in a sentence."
+    }
+  ]
+}
