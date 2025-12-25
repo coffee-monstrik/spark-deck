@@ -4,6 +4,7 @@ import { parseDeck } from "../lib/decks/schema";
 import {
   createInitialGameState,
   drawnCategoriesExhausted,
+  evaluateWinState,
   initialEmptyState,
   isCategoryDepleted,
 } from "../lib/game/state";
@@ -62,6 +63,22 @@ describe("game store reducer and persistence", () => {
 
     expect(afterDraw.currentCard).not.toBeNull();
     expect(afterDraw.drawnCategories[0].cards.length).toBe(category.cards.length - 1);
+  });
+
+  it("ignores duplicate draw requests while a card is active", () => {
+    const category = baseState.drawnCategories[0];
+    vi.spyOn(Math, "random").mockReturnValue(0.2);
+
+    const withSelection = gameReducer(baseState, {
+      type: "selectCategory",
+      payload: { category: category.name },
+    });
+    const firstDraw = gameReducer(withSelection, { type: "drawCard" });
+    const secondDraw = gameReducer(firstDraw, { type: "drawCard" });
+
+    expect(firstDraw.currentCard).not.toBeNull();
+    expect(secondDraw.currentCard?.id).toBe(firstDraw.currentCard?.id);
+    expect(secondDraw.drawnCategories[0].cards.length).toBe(category.cards.length - 1);
   });
 
   it("increments answered count when marking a card", () => {
@@ -142,12 +159,45 @@ describe("game store reducer and persistence", () => {
       cards: [],
     }));
 
-    const exhausted = gameReducer(
-      { ...baseState, drawnCategories: emptiedDrawn, currentCard: null },
-      { type: "continue" },
-    );
+    const rawState = { ...baseState, drawnCategories: emptiedDrawn, currentCard: null };
+    expect(evaluateWinState(rawState)).toBe("drawn-exhausted");
 
-    expect(exhausted.winState).toBe("drawn-exhausted");
-    expect(exhausted.remainingCategories.length).toBeGreaterThan(0);
+    const exhausted = gameReducer({ ...rawState, winState: "drawn-exhausted" }, { type: "continue" });
+
+    expect(exhausted.winState).toBe("none");
+    expect(exhausted.drawnCategories.every((stack) => stack.cards.length > 0)).toBe(true);
+    expect(exhausted.remainingCategories.length + exhausted.drawnCategories.length).toBeGreaterThan(0);
+  });
+
+  it("reshuffles categories from the full pool on request", () => {
+    const reshuffled = gameReducer(baseState, { type: "reshuffleCategories" });
+
+    expect(reshuffled.drawnCategories.length).toBeLessThanOrEqual(4);
+    expect(
+      reshuffled.drawnCategories.length + reshuffled.remainingCategories.length,
+    ).toBe(baseState.drawnCategories.length + baseState.remainingCategories.length);
+    expect(reshuffled.selectedCategory).toBeNull();
+  });
+
+  it("applies distinct colors to drawn categories after reshuffle", () => {
+    const duplicateColor = "#123123";
+    const withDuplicates = {
+      ...baseState,
+      deck: {
+        ...baseState.deck,
+        theme: { ...baseState.deck.theme, categoriesColors: [duplicateColor] },
+      },
+      drawnCategories: baseState.drawnCategories
+        .slice(0, 2)
+        .map((stack) => ({ ...stack, color: duplicateColor })),
+      remainingCategories: baseState.remainingCategories
+        .slice(0, 2)
+        .map((stack) => ({ ...stack, color: duplicateColor })),
+    };
+
+    const reshuffled = gameReducer(withDuplicates, { type: "reshuffleCategories" });
+    const colors = reshuffled.drawnCategories.map((stack) => stack.color);
+
+    expect(new Set(colors).size).toBe(reshuffled.drawnCategories.length);
   });
 });

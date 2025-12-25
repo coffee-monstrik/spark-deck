@@ -25,17 +25,17 @@ Goal: Build the two-player Spark Deck game per project_description.md using Next
 - Build a shared layout with footer and base CSS variables; include a global stop control where required.
 - Tests: navigation with/without state; ensure direct URL entry without session state returns to landing.
 
-## Step 5: Category page (2x2 grid)
+## Step 5: Category page (2x2 grid) - done!
 - Display current player prompt, answered counter, stop control, and four category tiles styled with deck theme.
 - Grey out empty categories and block clicks while still visible.
 - On category click: log `{player}: category X`, rotate current player, and route to card page with selected category.
 - Check winning condition: if all four drawn categories are empty, route to winning screen (first condition) before allowing new picks.
 - Tests: manual scenario where categories exhaust; unit/integration test ensures empty categories disable selection and trigger win condition when all are empty.
 
-## Step 6: Card page (question view)
+## Step 6: Card page (question view) - done!
 - Show category, current player, question text, Your Turn button, stop control.
-- On load, draw a random unused card from the selected category; remove it from the in-memory deck copy.
-- On Your Turn: log `{player}: question text`, increment answered counter, if category now empty mark it; route back to categories screen and swap current player for next pick.
+- On load, draw a random unused card from the selected category;
+- On Your Turn: remove used card from the in-memory deck, copy.log `{player}: question text`, increment answered counter; route back to categories screen redraw 4 categories randomly and swap current player for next pick.
 - Tests: repeated plays never repeat a card; answered counter increments; category empties after last card and is marked grey on return.
 
 ## Step 7: Winning condition screens

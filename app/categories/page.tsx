@@ -15,6 +15,14 @@ export default function CategoriesPage() {
   const router = useRouter();
 
   useEffect(() => {
+    if (state.winState === "drawn-exhausted" || state.winState === "deck-finished") {
+      return;
+    }
+    dispatch({ type: "reshuffleCategories" });
+  // We want a new draw on first mount and after each answered card.
+  }, [dispatch, state.answeredCount, state.winState]);
+
+  useEffect(() => {
     if (state.winState === "drawn-exhausted") {
       router.replace("/win");
     }
@@ -84,8 +92,12 @@ export default function CategoriesPage() {
           })}
         </div>
 
-        <div className="game-inline-stop">
+        <div className={'bottomBar'}>
           <StopControl variant="button" />
+          <div className="answered-chip">
+            Answered: <strong>{state.answeredCount}</strong>
+        </div>
+
         </div>
       </GameLayout>
     </GameGuard>

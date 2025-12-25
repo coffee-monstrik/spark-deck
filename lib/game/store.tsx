@@ -20,6 +20,7 @@ export type GameAction =
   | { type: "logAction"; payload: string }
   | { type: "markAnswered" }
   | { type: "rotatePlayer" }
+  | { type: "reshuffleCategories" }
   | { type: "continue" }
   | { type: "stop" }
   | { type: "reset" }
@@ -35,12 +36,113 @@ const GameContext = createContext<GameContextValue | undefined>(undefined);
 const nextPlayer = (current: GameState["currentPlayer"]): GameState["currentPlayer"] =>
   current === "player1" ? "player2" : "player1";
 
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+const adjustColor = (hex: string, delta: number): string => {
+  const normalized = hex.replace("#", "");
+  const value =
+    normalized.length === 3
+      ? normalized
+          .split("")
+          .map((char) => char + char)
+          .join("")
+      : normalized;
+
+  const num = parseInt(value, 16);
+  const r = clamp((num >> 16) + delta, 0, 255);
+  const g = clamp(((num >> 8) & 0x00ff) + delta, 0, 255);
+  const b = clamp((num & 0x0000ff) + delta, 0, 255);
+
+  const toHex = (component: number) => component.toString(16).padStart(2, "0");
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+};
+
 const withWinState = (state: GameState): GameState => ({
   ...state,
   winState: evaluateWinState(state),
 });
 
+const shuffleStacks = (stacks: CategoryStack[]): CategoryStack[] => {
+  const next = [...stacks];
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+  }
+  return next;
+};
+
+const uniqueColors = (input: string[]): string[] => Array.from(new Set(input.filter(Boolean)));
+
+const applyDistinctColors = (
+  stacks: CategoryStack[],
+  palette: string[],
+  fallback: string,
+): CategoryStack[] => {
+  if (stacks.length === 0) return stacks;
+
+  const basePalette = uniqueColors(palette);
+  const needs = stacks.length - basePalette.length;
+  const extendedPalette =
+    needs > 0
+      ? [
+          ...basePalette,
+          ...Array.from({ length: needs }, (_value, index) =>
+            adjustColor(fallback || "#0b7285", (index + 1) * 10),
+          ),
+        ]
+      : basePalette;
+
+  const colorChoices = shuffleStacks(extendedPalette).slice(0, stacks.length);
+
+  return stacks.map((stack, index) => ({
+    ...stack,
+    color: colorChoices[index] ?? fallback ?? "#0b7285",
+  }));
+};
+
+const reshuffleCategories = (state: GameState): GameState => {
+  const pool = shuffleStacks([...state.drawnCategories, ...state.remainingCategories]);
+  const drawnCategories = applyDistinctColors(
+    pool.slice(0, 4),
+    state.deck.theme.categoriesColors,
+    state.deck.theme.primary,
+  );
+  const remainingCategories = pool.slice(drawnCategories.length);
+
+  return withWinState({
+    ...state,
+    drawnCategories,
+    remainingCategories,
+    selectedCategory: null,
+  });
+};
+
+const repopulateAfterExhaustion = (state: GameState): GameState => {
+  const available = [...state.drawnCategories, ...state.remainingCategories].filter(
+    (stack) => stack.cards.length > 0,
+  );
+
+  const pool = shuffleStacks(available);
+  const drawnCategories = applyDistinctColors(
+    pool.slice(0, 4),
+    state.deck.theme.categoriesColors,
+    state.deck.theme.primary,
+  );
+  const remainingCategories = pool.slice(drawnCategories.length);
+
+  return withWinState({
+    ...state,
+    drawnCategories,
+    remainingCategories,
+    selectedCategory: null,
+    currentCard: null,
+  });
+};
+
 const drawCardFromCategory = (state: GameState): GameState => {
+  if (state.currentCard) {
+    return state;
+  }
   if (!state.selectedCategory) {
     return state;
   }
@@ -102,7 +204,16 @@ const reducer = (_state: GameState, action: GameAction): GameState => {
     }
     case "rotatePlayer":
       return { ..._state, currentPlayer: nextPlayer(_state.currentPlayer) };
+    case "reshuffleCategories":
+      return reshuffleCategories(_state);
     case "continue":
+      if (_state.winState === "drawn-exhausted" || evaluateWinState(_state) === "drawn-exhausted") {
+        return repopulateAfterExhaustion({
+          ..._state,
+          status: "ready",
+          stopped: false,
+        });
+      }
       return withWinState({ ..._state, status: "ready", stopped: false });
     case "stop":
       return { ..._state, status: "stopped", stopped: true };
