@@ -115,7 +115,6 @@ export const Landing = ({ decks }: Props) => {
                       />
                       <div>
                         <p className="landing-deck-name">{deck.name}</p>
-                        <p className="landing-deck-id">{deck.id}</p>
                       </div>
                     </div>
                   </div>

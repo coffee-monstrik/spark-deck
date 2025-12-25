@@ -1,7 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { parseDeck } from "../lib/decks/schema";
-import { createInitialGameState, initialEmptyState } from "../lib/game/state";
+import {
+  createInitialGameState,
+  drawnCategoriesExhausted,
+  initialEmptyState,
+  isCategoryDepleted,
+} from "../lib/game/state";
 import { deserializeState, gameReducer } from "../lib/game/store";
 import seedDeck from "../public/decks/spark-seed.json";
 
@@ -24,6 +29,14 @@ describe("game store reducer and persistence", () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+  });
+
+  it("detects depleted categories", () => {
+    const emptyStack = { ...baseState.drawnCategories[0], cards: [] };
+
+    expect(isCategoryDepleted(emptyStack)).toBe(true);
+    expect(isCategoryDepleted(baseState.drawnCategories[1])).toBe(false);
+    expect(drawnCategoriesExhausted([emptyStack])).toBe(true);
   });
 
   it("selects a category and clears any active card", () => {
@@ -121,5 +134,20 @@ describe("game store reducer and persistence", () => {
     );
 
     expect(finished.winState).toBe("deck-finished");
+  });
+
+  it("flags the drawn categories exhaustion win state", () => {
+    const emptiedDrawn = baseState.drawnCategories.map((stack) => ({
+      ...stack,
+      cards: [],
+    }));
+
+    const exhausted = gameReducer(
+      { ...baseState, drawnCategories: emptiedDrawn, currentCard: null },
+      { type: "continue" },
+    );
+
+    expect(exhausted.winState).toBe("drawn-exhausted");
+    expect(exhausted.remainingCategories.length).toBeGreaterThan(0);
   });
 });

@@ -24,6 +24,11 @@ describe("start flow", () => {
     );
     expect(state.answeredCount).toBe(0);
     expect(state.log.length).toBe(0);
+
+    const palette = new Set(parsedDeck.theme.categoriesColors);
+    const drawnColors = state.drawnCategories.map((category) => category.color);
+    expect(new Set(drawnColors).size).toBe(state.drawnCategories.length);
+    drawnColors.forEach((color) => expect(palette.has(color)).toBe(true));
   });
 
   it("respects default names when inputs are blank", () => {

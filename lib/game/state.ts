@@ -60,6 +60,62 @@ const safeName = (value: string | undefined, fallback: string): string => {
   return trimmed && trimmed.length > 0 ? trimmed : fallback;
 };
 
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+const uniqueColors = (input: string[]): string[] =>
+  Array.from(new Set(input.filter(Boolean)));
+
+const adjustColor = (hex: string, delta: number): string => {
+  const normalized = hex.replace("#", "");
+  const value = normalized.length === 3
+    ? normalized
+        .split("")
+        .map((char) => char + char)
+        .join("")
+    : normalized;
+
+  const num = parseInt(value, 16);
+  const r = clamp((num >> 16) + delta, 0, 255);
+  const g = clamp(((num >> 8) & 0x00ff) + delta, 0, 255);
+  const b = clamp((num & 0x0000ff) + delta, 0, 255);
+
+  const toHex = (component: number) => component.toString(16).padStart(2, "0");
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+};
+
+const assignCategoryColors = (
+  stacks: CategoryStack[],
+  palette: string[],
+  fallback: string,
+): CategoryStack[] => {
+  if (stacks.length === 0) return stacks;
+
+  const basePalette = uniqueColors(palette);
+  const needs = stacks.length - basePalette.length;
+
+  const extendedPalette =
+    needs > 0
+      ? [
+          ...basePalette,
+          ...Array.from({ length: needs }, (_value, index) =>
+            adjustColor(fallback || "#0b7285", (index + 1) * 10),
+          ),
+        ]
+      : basePalette;
+
+  const colorChoices = shuffle(extendedPalette).slice(0, stacks.length);
+
+  return stacks.map((stack, index) => ({
+    ...stack,
+    color: colorChoices[index] ?? stack.color ?? fallback ?? "#0b7285",
+  }));
+};
+
+export const isCategoryDepleted = (stack: CategoryStack): boolean => stack.cards.length === 0;
+
+export const drawnCategoriesExhausted = (stacks: CategoryStack[]): boolean =>
+  stacks.length > 0 && stacks.every(isCategoryDepleted);
+
 const buildCategoryStacks = (
   deck: Deck,
   shuffledCards: DeckCard[],
@@ -92,7 +148,11 @@ export const createInitialGameState = (config: StartConfig): GameState => {
   const shuffledCards = shuffle(config.deck.cards);
   const categoryStacks = shuffle(buildCategoryStacks(config.deck, shuffledCards));
 
-  const drawnCategories = categoryStacks.slice(0, 4);
+  const drawnCategories = assignCategoryColors(
+    categoryStacks.slice(0, 4),
+    config.deck.theme.categoriesColors,
+    config.deck.theme.primary,
+  );
   const remainingCategories = categoryStacks.slice(drawnCategories.length);
 
   return {
@@ -158,9 +218,7 @@ export const evaluateWinState = (state: GameState): WinState => {
     return "deck-finished";
   }
 
-  const hasDrawnCategories = state.drawnCategories.length > 0;
-  const drawnExhausted =
-    hasDrawnCategories && state.drawnCategories.every((stack) => stack.cards.length === 0);
+  const drawnExhausted = drawnCategoriesExhausted(state.drawnCategories);
 
   if (drawnExhausted) {
     return "drawn-exhausted";

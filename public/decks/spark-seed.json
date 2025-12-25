@@ -8,7 +8,12 @@
     "disabled": "#CED4DA",
     "surface": "#F8F9FA",
     "text": "#0F172A",
-    "categoriesColors": ["#0B7285", "#3BC9DB", "#FFD43B", "#845EF7"],
+    "categoriesColors": [
+      "#FF6BB5", 
+      "#FF6B6B", 
+      "#FFB56B", 
+      "#6BB5FF"
+    ],
     "accent": "#FFD43B",
     "fontFamily": "'Space Grotesk', 'Helvetica Neue', Arial, sans-serif"
   },

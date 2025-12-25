@@ -19,7 +19,7 @@ Goal: Build the two-player Spark Deck game per project_description.md using Next
 - Persist/hydrate to sessionStorage; ensure reset clears storage.
 - Tests: reducer unit tests for each action and hydration logic; manual check that refresh restores session.
 
-## Step 4: Routing, guards, and layout
+## Step 4: Routing, guards, and layout - done!
 - Use App Router routes: `/` (landing), `/categories`, `/card`, `/win`, `/final`, `/stop` (labels can be adjusted but keep separation).
 - Add a guard wrapper that redirects to `/` if required state is missing or game finished.
 - Build a shared layout with footer and base CSS variables; include a global stop control where required.

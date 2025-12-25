@@ -1,38 +1,88 @@
 "use client";
 
-import Link from "next/link";
+import { CSSProperties, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import { GameGuard } from "../components/game-guard";
 import { GameLayout } from "../components/game-layout";
 import { StopControl } from "../components/stop-control";
 import { useGameStore } from "@/lib/game/store";
+import { CategoryStack, isCategoryDepleted } from "@/lib/game/state";
+import styles from "./categories.module.css";
 
 export default function CategoriesPage() {
-  const { state } = useGameStore();
+  const { state, dispatch } = useGameStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state.winState === "drawn-exhausted") {
+      router.replace("/win");
+    }
+  }, [router, state.winState]);
+
+  const handleCategoryClick = (stack: CategoryStack) => {
+    if (isCategoryDepleted(stack) || state.winState === "drawn-exhausted") {
+      return;
+    }
+
+    dispatch({
+      type: "selectCategory",
+      payload: { category: stack.name },
+    });
+    dispatch({
+      type: "logAction",
+      payload: `${state.players[state.currentPlayer].name}: category ${stack.name}`,
+    });
+    dispatch({ type: "rotatePlayer" });
+
+    router.push("/card");
+  };
 
   return (
     <GameGuard>
-      <GameLayout showStop>
-        <section className="game-header">
+      <GameLayout>
+
+        <section className={styles.prompt}>
           <div>
-            <p className="eyebrow">Current player</p>
-            <h1 className="page-title">{state.players[state.currentPlayer].name}</h1>
-          </div>
-          <div className="answered-chip">
-            Answered: <strong>{state.answeredCount}</strong>
+            <h2 className={styles.promptTitle}>{state.players[state.currentPlayer].name}: Choose a category</h2>
+            <p className={styles.promptCopy}>
+              answered so far: {state.answeredCount}
+            </p>
           </div>
         </section>
 
-        <section className="game-placeholder">
-          <h2>Categories grid coming up next.</h2>
-          <p>
-            We will list four drawn categories here so players can choose the next prompt.
-            You can proceed to the card view to continue scaffolding the flow.
-          </p>
-          <Link className="primary-link" href="/card">
-            Go to Card view
-          </Link>
-        </section>
+        <div className={styles.grid}>
+          {state.drawnCategories.map((stack) => {
+            const depleted = isCategoryDepleted(stack);
+            const cardsLeft = stack.cards.length;
+            const label =
+              cardsLeft === 0
+                ? "Empty"
+                : `${cardsLeft} card${cardsLeft === 1 ? "" : "s"} left`;
+
+            return (
+              <button
+                key={stack.name}
+                type="button"
+                className={`${styles.tile} ${depleted ? styles.tileDisabled : ""}`}
+                onClick={() => handleCategoryClick(stack)}
+                disabled={depleted}
+                aria-disabled={depleted}
+                style={
+                  {
+                    "--tile-color": depleted ? "var(--deck-disabled, #ced4da)" : stack.color,
+                    "--tile-ink": depleted ? "var(--deck-text, #0f172a)" : "#ffffff",
+                  } as CSSProperties
+                }
+              >
+                <div className={styles.tileHeading}>
+                  <p className={styles.tileName}>{stack.name}</p>
+                </div>
+                <p className={styles.tileMeta}>{label}</p>
+              </button>
+            );
+          })}
+        </div>
 
         <div className="game-inline-stop">
           <StopControl variant="button" />
