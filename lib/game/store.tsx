@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useReducer } from "react";
+import type { ReactNode } from "react";
 
 import {
   CategoryStack,
@@ -68,8 +69,8 @@ const withWinState = (state: GameState): GameState => ({
   winState: evaluateWinState(state),
 });
 
-const shuffleStacks = (stacks: CategoryStack[]): CategoryStack[] => {
-  const next = [...stacks];
+const shuffleStacks = <T,>(items: T[]): T[] => {
+  const next = [...items];
   for (let index = next.length - 1; index > 0; index -= 1) {
     const swapIndex = Math.floor(Math.random() * (index + 1));
     [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
@@ -299,7 +300,7 @@ const reducer = (_state: GameState, action: GameAction): GameState => {
 export const gameReducer = reducer;
 
 type ProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const parseStoredState = (raw: string | null): GameState | null => {

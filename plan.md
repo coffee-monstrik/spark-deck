@@ -48,11 +48,6 @@ Goal: Build the two-player Spark Deck game per project_description.md using Next
 - Tests: log formatting matches recorded actions; email link contains transcript snippet.
 
 ## Step 9: Styling and theming
-- Implement CSS modules for pages/components; mobile-first layout with sensible spacing, deck-themed colors/fonts, and always-visible footer message.
-- Ensure tiles/buttons have focus/active states and discrete stop controls are visually secondary but discoverable.
-- Tests: responsive check at common breakpoints; accessibility scan for color contrast and keyboard navigation.
 
-## Step 10: QA and polish
-- Add basic unit/integration tests (Playwright/React Testing Library) for primary flows: start game, play a card, exhaust categories, stop flow.
-- Manual test matrix: mobile browsers, refresh mid-game (session restore), stop/continue choices, and final deck exhaustion.
-- Document how to run the app and tests in README or /docs.
+
+
