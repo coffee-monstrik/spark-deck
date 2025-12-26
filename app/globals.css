@@ -159,10 +159,12 @@ a {
   color: var(--app-muted);
   font-size: 15px;
   line-height: 1.6;
+  text-align: center;
 }
 
 .copy-small {
   font-size: 13px;
+  text-align: center;
 }
 
 .answered-chip {
@@ -343,6 +345,55 @@ button.secondary-link:disabled {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.settings-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--app-border);
+  border-radius: 14px;
+  background: #fffdf9;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--app-ink);
+  cursor: pointer;
+  transition: box-shadow 150ms ease, transform 150ms ease, border-color 150ms ease;
+}
+
+.settings-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px var(--app-shadow);
+  border-color: var(--app-accent);
+}
+
+.settings-grid {
+  display: grid;
+  gap: 10px;
+  max-width: 420px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--app-border);
+  border-radius: 12px;
+  background: #fffdf9;
+  font-size: 14px;
+  color: var(--app-ink);
+}
+
+.toggle-row input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--app-accent);
 }
 
 .deck-grid {

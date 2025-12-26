@@ -12,6 +12,7 @@ import { CategoryStack, isCategoryDepleted } from "@/lib/game/state";
 export default function CategoriesPage() {
   const { state, dispatch } = useGameStore();
   const router = useRouter();
+  const showCardsLeft = state.settings?.showCardsLeft ?? true;
 
   useEffect(() => {
     if (state.winState === "drawn-exhausted" || state.winState === "deck-finished") {
@@ -79,7 +80,7 @@ export default function CategoriesPage() {
                 }
               >
                 <h3>{stack.name}</h3>
-                <p>{label}</p>
+                {showCardsLeft && <p>{label}</p>}
               </button>
             );
           })}

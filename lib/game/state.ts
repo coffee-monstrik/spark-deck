@@ -17,6 +17,11 @@ export type GameStatus = "idle" | "ready" | "stopped";
 
 export type WinState = "none" | "drawn-exhausted" | "deck-finished";
 
+export type GameSettings = {
+  showTimer: boolean;
+  showCardsLeft: boolean;
+};
+
 export type GameState = {
   status: GameStatus;
   deck: {
@@ -41,17 +46,23 @@ export type GameState = {
   winState: WinState;
   stopped: boolean;
   lastRoute: string | null;
+  settings: GameSettings;
 };
 
 export type StartConfig = {
   deck: Deck;
   playerOneName?: string;
   playerTwoName?: string;
+  settings?: Partial<GameSettings>;
 };
 
 const DEFAULT_PLAYER_ONE = "Me";
 const DEFAULT_PLAYER_TWO = "You";
 export const CATEGORY_PALETTE = ["#C46149", "#D98B6E", "#FCD3C2", "#E6B29E"];
+export const DEFAULT_SETTINGS: GameSettings = {
+  showTimer: false,
+  showCardsLeft: false,
+};
 
 const shuffle = <T,>(input: T[]): T[] => {
   const result = [...input];
@@ -148,6 +159,10 @@ export const canStartGame = (deck: Deck | null | undefined): deck is Deck => {
 export const createInitialGameState = (config: StartConfig): GameState => {
   const playerOne = safeName(config.playerOneName, DEFAULT_PLAYER_ONE);
   const playerTwo = safeName(config.playerTwoName, DEFAULT_PLAYER_TWO);
+  const settings = {
+    showTimer: config.settings?.showTimer ?? DEFAULT_SETTINGS.showTimer,
+    showCardsLeft: config.settings?.showCardsLeft ?? DEFAULT_SETTINGS.showCardsLeft,
+  };
 
   const shuffledCards = shuffle(config.deck.cards);
   const categoryStacks = shuffle(buildCategoryStacks(config.deck, shuffledCards));
@@ -189,6 +204,7 @@ export const createInitialGameState = (config: StartConfig): GameState => {
     winState: "none",
     stopped: false,
     lastRoute: null,
+    settings,
   };
 };
 
@@ -222,6 +238,7 @@ export const initialEmptyState: GameState = {
   winState: "none",
   stopped: false,
   lastRoute: null,
+  settings: DEFAULT_SETTINGS,
 };
 
 export const countCardsInStacks = (stacks: CategoryStack[]): number =>

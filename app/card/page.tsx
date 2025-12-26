@@ -13,6 +13,8 @@ export default function CardPage() {
   const router = useRouter();
   const [hasDrawn, setHasDrawn] = useState(false);
   const [now, setNow] = useState(() => Date.now());
+  const showTimer = state.settings?.showTimer ?? true;
+  const showCardsLeft = state.settings?.showCardsLeft ?? true;
 
   const selectedStack = useMemo(
     () =>
@@ -104,16 +106,20 @@ export default function CardPage() {
         <article className="panel">
           <div className="question-box">
             <p>{state.currentCard?.text ?? "No card available."}</p>
-            <p className="copy copy-small">Time on this question: {elapsedLabel}</p>
+            {showTimer && (
+              <p className="copy copy-small">Time on this question: {elapsedLabel}</p>
+            )}
           </div>
 
           <div className="meta-row">
             <p className="copy">
               Answering: <strong>{currentPlayerName}</strong>
             </p>
-            <p className="copy">
-              Cards left in this category: <strong>{cardsRemaining}</strong>
-            </p>
+            {showCardsLeft && (
+              <p className="copy">
+                Cards left in this category: <strong>{cardsRemaining}</strong>
+              </p>
+            )}
           </div>
 
           <div className="center-row">

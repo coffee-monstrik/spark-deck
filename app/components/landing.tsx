@@ -17,6 +17,9 @@ export const Landing = ({ decks }: Props) => {
   const [playerOne, setPlayerOne] = useState("Me");
   const [playerTwo, setPlayerTwo] = useState("You");
   const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null);
+  const [showTimer, setShowTimer] = useState(false);
+  const [showCardsLeft, setShowCardsLeft] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [error, setError] = useState<string>("");
 
   const selectedDeck = useMemo(
@@ -38,6 +41,10 @@ export const Landing = ({ decks }: Props) => {
         deck: selectedDeck,
         playerOneName: playerOne,
         playerTwoName: playerTwo,
+        settings: {
+          showTimer,
+          showCardsLeft,
+        },
       },
     });
 
@@ -111,6 +118,38 @@ export const Landing = ({ decks }: Props) => {
               );
             })}
           </div>
+        </div>
+
+        <div className="stack">
+          <button
+            type="button"
+            className="settings-toggle"
+            onClick={() => setSettingsOpen((value) => !value)}
+            aria-expanded={settingsOpen}
+          >
+            <span>Settings</span>
+            <span aria-hidden="true">{settingsOpen ? "−" : "+"}</span>
+          </button>
+          {settingsOpen && (
+            <div className="settings-grid">
+              <label className="toggle-row">
+                <span>Show timer</span>
+                <input
+                  type="checkbox"
+                  checked={showTimer}
+                  onChange={(event) => setShowTimer(event.target.checked)}
+                />
+              </label>
+              <label className="toggle-row">
+                <span>Show cards left in category</span>
+                <input
+                  type="checkbox"
+                  checked={showCardsLeft}
+                  onChange={(event) => setShowCardsLeft(event.target.checked)}
+                />
+              </label>
+            </div>
+          )}
         </div>
 
         {error && <p className="error">{error}</p>}
