@@ -2,6 +2,7 @@
   "id": "spark-deep-dive",
   "name": "Spark Deep Dive",
   "description": "Reflective prompts for slower, thoughtful sessions.",
+  "approximateTimeMinutes": 30,
   "categories": [
     "Origins",
     "Challenges",

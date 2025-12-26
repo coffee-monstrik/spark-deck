@@ -110,9 +110,13 @@ export const Landing = ({ decks }: Props) => {
                   aria-pressed={isSelected}
                 >
                   <span className="swatch" aria-hidden="true" />
-                  <div>
+                  <div className="deck-info">
                     <h3>{deck.name}</h3>
                     <p>{deck.description}</p>
+                  </div>
+                  <div className="deck-meta">
+                    <span>{deck.cards.length} questions</span>
+                    <span>~{deck.approximateTimeMinutes} min</span>
                   </div>
                 </button>
               );

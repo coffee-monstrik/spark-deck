@@ -2,6 +2,7 @@
   "id": "spark-seed",
   "name": "Spark Seed",
   "description": "Warm, curious prompts to open up a two-player conversation.",
+  "approximateTimeMinutes": 25,
   "categories": [
     "Icebreakers",
     "Reflections",

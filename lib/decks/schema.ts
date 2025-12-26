@@ -8,6 +8,7 @@ export type Deck = {
   id: string;
   name: string;
   description: string;
+  approximateTimeMinutes: number;
   categories: string[];
   cards: DeckCard[];
 };
@@ -22,6 +23,9 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === "string" && value.trim().length > 0;
+
+const isPositiveNumber = (value: unknown): value is number =>
+  typeof value === "number" && Number.isFinite(value) && value > 0;
 
 const validateCategories = (
   input: unknown,
@@ -164,6 +168,7 @@ export const parseDeck = (payload: unknown): Deck => {
   const id = payload.id;
   const name = payload.name;
   const description = payload.description;
+  const approximateTimeMinutes = payload.approximateTimeMinutes;
 
   if (!isNonEmptyString(id)) {
     issues.push({ field: "id", message: "must be a non-empty string" });
@@ -177,6 +182,13 @@ export const parseDeck = (payload: unknown): Deck => {
     issues.push({
       field: "description",
       message: "must be a non-empty string",
+    });
+  }
+
+  if (!isPositiveNumber(approximateTimeMinutes)) {
+    issues.push({
+      field: "approximateTimeMinutes",
+      message: "must be a positive number",
     });
   }
 
@@ -194,6 +206,7 @@ export const parseDeck = (payload: unknown): Deck => {
     id: (id as string).trim(),
     name: (name as string).trim(),
     description: (description as string).trim(),
+    approximateTimeMinutes: approximateTimeMinutes as number,
     categories,
     cards,
   };

@@ -51,7 +51,7 @@ export default function CategoriesPage() {
       <GameLayout>
 
         <section className="section">
-          <h2 className="section-title">{state.players[state.currentPlayer].name}: Choose a category</h2>
+          <h2 className="section-title">Choosing category: {state.players[state.currentPlayer].name}</h2>
         </section>
 
         <div className="tile-grid">

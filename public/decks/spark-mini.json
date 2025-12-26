@@ -2,6 +2,7 @@
   "id": "spark-mini",
   "name": "Spark Mini",
   "description": "A quick five-card warm-up with three simple categories.",
+  "approximateTimeMinutes": 8,
   "categories": ["Warm-up", "Moments", "Next Steps"],
   "cards": [
     { "id": "mini-1", "category": "Warm-up", "text": "Share one small win from this week." },
