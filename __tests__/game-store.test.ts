@@ -183,10 +183,6 @@ describe("game store reducer and persistence", () => {
     const duplicateColor = "#123123";
     const withDuplicates = {
       ...baseState,
-      deck: {
-        ...baseState.deck,
-        theme: { ...baseState.deck.theme, categoriesColors: [duplicateColor] },
-      },
       drawnCategories: baseState.drawnCategories
         .slice(0, 2)
         .map((stack) => ({ ...stack, color: duplicateColor })),

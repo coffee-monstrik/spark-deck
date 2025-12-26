@@ -2,16 +2,6 @@
   "id": "spark-deep-dive",
   "name": "Spark Deep Dive",
   "description": "Reflective prompts for slower, thoughtful sessions.",
-  "theme": {
-    "primary": "#1F4B99",
-    "secondary": "#3D7FFF",
-    "disabled": "#C5CCE0",
-    "surface": "#F5F7FB",
-    "text": "#0B1021",
-    "categoriesColors": ["#1F4B99", "#3D7FFF", "#FFB347", "#5F67C1"],
-    "accent": "#FFB347",
-    "fontFamily": "'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif"
-  },
   "categories": [
     "Origins",
     "Challenges",

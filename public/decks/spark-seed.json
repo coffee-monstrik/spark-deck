@@ -2,21 +2,6 @@
   "id": "spark-seed",
   "name": "Spark Seed",
   "description": "Warm, curious prompts to open up a two-player conversation.",
-  "theme": {
-    "primary": "#0B7285",
-    "secondary": "#3BC9DB",
-    "disabled": "#CED4DA",
-    "surface": "#F8F9FA",
-    "text": "#0F172A",
-    "categoriesColors": [
-      "#FF6BB5", 
-      "#FF6B6B", 
-      "#FFB56B", 
-      "#6BB5FF"
-    ],
-    "accent": "#FFD43B",
-    "fontFamily": "'Space Grotesk', 'Helvetica Neue', Arial, sans-serif"
-  },
   "categories": [
     "Icebreakers",
     "Reflections",

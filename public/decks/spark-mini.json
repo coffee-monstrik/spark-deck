@@ -2,15 +2,6 @@
   "id": "spark-mini",
   "name": "Spark Mini",
   "description": "A quick five-card warm-up with three simple categories.",
-  "theme": {
-    "primary": "#0b7285",
-    "secondary": "#3bc9db",
-    "disabled": "#ced4da",
-    "surface": "#f8f9fa",
-    "text": "#0f172a",
-    "categoriesColors": ["#0b7285", "#0f4f7b", "#227c9d", "#38bdf8"],
-    "fontFamily": "var(--font-geist-sans)"
-  },
   "categories": ["Warm-up", "Moments", "Next Steps"],
   "cards": [
     { "id": "mini-1", "category": "Warm-up", "text": "Share one small win from this week." },

@@ -1,7 +1,7 @@
 "use client";
 
-import { useGameStore } from "@/lib/game/store";
 import { StopControl } from "./stop-control";
+import { Footer } from "./footer";
 
 type Props = {
   children: React.ReactNode;
@@ -9,8 +9,6 @@ type Props = {
 };
 
 export const GameLayout = ({ children, showStop = false }: Props) => {
-  const { state } = useGameStore();
-
   return (
     <div className="game-shell">
       <main className="game-surface">
@@ -21,11 +19,7 @@ export const GameLayout = ({ children, showStop = false }: Props) => {
         )}
         {children}
       </main>
-      <footer className="game-footer">
-        <p>
-          Spark Deck by Alyona · Theme: {state.deck.name || "choose a deck"}
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 };

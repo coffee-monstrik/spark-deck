@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Spark Deck",
-  description: "Two-player spark deck game with themed prompts.",
+  description: "Two-player game with themed prompts.",
 };
 
 export default function RootLayout({

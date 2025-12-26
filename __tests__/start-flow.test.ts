@@ -2,7 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import seedDeck from "../public/decks/spark-seed.json";
 import { parseDeck } from "../lib/decks/schema";
-import { canStartGame, createInitialGameState } from "../lib/game/state";
+import {
+  CATEGORY_PALETTE,
+  canStartGame,
+  createInitialGameState,
+} from "../lib/game/state";
 
 const parsedDeck = parseDeck(seedDeck);
 
@@ -25,10 +29,11 @@ describe("start flow", () => {
     expect(state.answeredCount).toBe(0);
     expect(state.log.length).toBe(0);
 
-    const palette = new Set(parsedDeck.theme.categoriesColors);
     const drawnColors = state.drawnCategories.map((category) => category.color);
     expect(new Set(drawnColors).size).toBe(state.drawnCategories.length);
-    drawnColors.forEach((color) => expect(palette.has(color)).toBe(true));
+    drawnColors.forEach((color) =>
+      expect(CATEGORY_PALETTE.includes(color)).toBe(true),
+    );
   });
 
   it("respects default names when inputs are blank", () => {

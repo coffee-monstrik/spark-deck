@@ -23,7 +23,6 @@ export type GameState = {
     id: string;
     name: string;
     description: string;
-    theme: Deck["theme"];
   };
   players: Record<PlayerId, PlayerState>;
   currentPlayer: PlayerId;
@@ -166,7 +165,6 @@ export const createInitialGameState = (config: StartConfig): GameState => {
       id: config.deck.id,
       name: config.deck.name,
       description: config.deck.description,
-      theme: config.deck.theme,
     },
     players: {
       player1: { id: "player1", name: playerOne },
@@ -200,14 +198,6 @@ export const initialEmptyState: GameState = {
     id: "",
     name: "",
     description: "",
-    theme: {
-      primary: "",
-      secondary: "",
-      disabled: "",
-      surface: "",
-      text: "",
-      categoriesColors: [],
-    },
   },
   players: {
     player1: { id: "player1", name: DEFAULT_PLAYER_ONE },

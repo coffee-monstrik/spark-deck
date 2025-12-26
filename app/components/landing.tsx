@@ -49,7 +49,7 @@ export const Landing = ({ decks }: Props) => {
     <div className="app-page">
       <section className="hero">
         <p className="eyebrow">Spark Deck</p>
-        <h1 className="page-title">💌 Welcome to Spark Deck!</h1>
+        <h1 className="page-title"> Welcome to Spark Deck!</h1>
         <p className="copy">
           This is engaging "game" to spark meaningful conversations. Start a friendly
           competition while getting to know each other.
@@ -85,7 +85,6 @@ export const Landing = ({ decks }: Props) => {
         <div className="stack">
           <div className="stack">
             <h2 className="section-title">Choose a deck</h2>
-            <p className="copy copy-small">Select a mood to theme your questions and categories.</p>
           </div>
 
           <div className="deck-grid">
