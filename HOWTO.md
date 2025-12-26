@@ -23,4 +23,9 @@ git remote add origin https://github.com/coffee-monstrik/spark-deck.git
 git push -u origin main
 ```
 
-III.
+III. Implementation
+Created plan.md
+and started step by step implementation while testing every step of the way
+
+IV. deploy
+
