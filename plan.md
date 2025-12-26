@@ -38,8 +38,7 @@ Goal: Build the two-player Spark Deck game per project_description.md using Next
 - On Your Turn: remove used card from the in-memory deck, copy.log `{player}: question text`, increment answered counter; route back to categories screen redraw 4 categories randomly and swap current player for next pick.
 - Tests: repeated plays never repeat a card; answered counter increments; category empties after last card and is marked grey on return.
 
-## Step 7: Winning condition screens
-- First winning condition (all four drawn categories empty): screen with message, counts, Continue Anyway (reshuffle/reshow categories if any deck cards remain) and Stop Here (go to stop page).
+## Step 7: Winning condition screens - done!
 - Final page when entire deck is exhausted: display completion message and stop control.
 - Tests: simulate exhaustion of drawn categories vs entire deck to ensure correct screen and branching.
 

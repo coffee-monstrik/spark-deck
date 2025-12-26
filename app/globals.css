@@ -297,6 +297,7 @@ body {
 
 .win-actions {
   margin: 12px 0 22px;
+  gap: 12px;
 }
 
 .eyebrow {
@@ -318,6 +319,54 @@ body {
   padding: 8px 12px;
   font-size: 13px;
   background: white;
+}
+
+.win-subtitle {
+  color: var(--deck-text, #0f172a);
+  opacity: 0.8;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.win-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.win-summary.final {
+  margin-top: 20px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid var(--deck-disabled, #ced4da);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  color: var(--deck-text, #0f172a);
+  opacity: 0.7;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--deck-primary, #0b7285);
+}
+
+.stat-muted {
+  color: var(--deck-text, #0f172a);
+  opacity: 0.75;
+  font-size: 13px;
 }
 
 .game-placeholder {

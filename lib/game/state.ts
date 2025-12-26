@@ -209,18 +209,26 @@ export const initialEmptyState: GameState = {
   stopped: false,
 };
 
-const totalCards = (stacks: CategoryStack[]): number =>
+export const countCardsInStacks = (stacks: CategoryStack[]): number =>
   stacks.reduce((count, stack) => count + stack.cards.length, 0);
 
+export const remainingCardCount = (state: GameState): number =>
+  countCardsInStacks([...state.drawnCategories, ...state.remainingCategories]) +
+  (state.currentCard ? 1 : 0);
+
+export const totalDeckSize = (state: GameState): number =>
+  state.answeredCount + remainingCardCount(state);
+
 export const evaluateWinState = (state: GameState): WinState => {
-  const cardsRemaining = totalCards(state.drawnCategories) + totalCards(state.remainingCategories);
+  const cardsRemaining = remainingCardCount(state);
   if (cardsRemaining === 0) {
     return "deck-finished";
   }
 
   const drawnExhausted = drawnCategoriesExhausted(state.drawnCategories);
+  const hasActiveCard = Boolean(state.currentCard);
 
-  if (drawnExhausted) {
+  if (drawnExhausted && !hasActiveCard) {
     return "drawn-exhausted";
   }
 

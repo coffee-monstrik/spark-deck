@@ -53,9 +53,6 @@ export default function CategoriesPage() {
         <section className={styles.prompt}>
           <div>
             <h2 className={styles.promptTitle}>{state.players[state.currentPlayer].name}: Choose a category</h2>
-            <p className={styles.promptCopy}>
-              answered so far: {state.answeredCount}
-            </p>
           </div>
         </section>
 
@@ -97,7 +94,6 @@ export default function CategoriesPage() {
           <div className="answered-chip">
             Answered: <strong>{state.answeredCount}</strong>
         </div>
-
         </div>
       </GameLayout>
     </GameGuard>
