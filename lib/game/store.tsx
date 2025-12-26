@@ -18,10 +18,16 @@ export type GameAction =
   | { type: "selectCategory"; payload: { category: string } }
   | { type: "drawCard" }
   | { type: "logAction"; payload: string }
+  | {
+      type: "recordAnswerDuration";
+      payload: { playerId: GameState["currentPlayer"]; durationMs: number };
+    }
   | { type: "markAnswered" }
   | { type: "rotatePlayer" }
   | { type: "reshuffleCategories" }
   | { type: "continue" }
+  | { type: "setLastRoute"; payload: string }
+  | { type: "resume" }
   | { type: "stop" }
   | { type: "reset" }
   | { type: "hydrate"; payload: GameState };
@@ -156,7 +162,15 @@ const drawCardFromCategory = (state: GameState): GameState => {
 
   const target = state.drawnCategories[targetIndex];
   if (target.cards.length === 0) {
-    return { ...state, currentCard: null };
+    return {
+      ...state,
+      currentCard: null,
+      answerTimer: {
+        startedAt: null,
+        pausedAt: null,
+        pausedTotalMs: 0,
+      },
+    };
   }
 
   const cardIndex = Math.floor(Math.random() * target.cards.length);
@@ -174,6 +188,11 @@ const drawCardFromCategory = (state: GameState): GameState => {
     ...state,
     currentCard: card,
     drawnCategories: updatedCategories,
+    answerTimer: {
+      startedAt: Date.now(),
+      pausedAt: null,
+      pausedTotalMs: 0,
+    },
   };
 };
 
@@ -186,11 +205,27 @@ const reducer = (_state: GameState, action: GameAction): GameState => {
         ..._state,
         selectedCategory: action.payload.category,
         currentCard: null,
+        answerTimer: {
+          startedAt: null,
+          pausedAt: null,
+          pausedTotalMs: 0,
+        },
       };
     case "drawCard":
       return withWinState(drawCardFromCategory(_state));
     case "logAction":
       return { ..._state, log: [..._state.log, action.payload] };
+    case "recordAnswerDuration":
+      return {
+        ..._state,
+        answerDurations: {
+          ..._state.answerDurations,
+          [action.payload.playerId]: [
+            ..._state.answerDurations[action.payload.playerId],
+            action.payload.durationMs,
+          ],
+        },
+      };
     case "markAnswered": {
       if (!_state.currentCard) {
         return _state;
@@ -200,6 +235,11 @@ const reducer = (_state: GameState, action: GameAction): GameState => {
         ..._state,
         answeredCount: _state.answeredCount + 1,
         currentCard: null,
+        answerTimer: {
+          startedAt: null,
+          pausedAt: null,
+          pausedTotalMs: 0,
+        },
       });
     }
     case "rotatePlayer":
@@ -215,7 +255,37 @@ const reducer = (_state: GameState, action: GameAction): GameState => {
         });
       }
       return withWinState({ ..._state, status: "ready", stopped: false });
+    case "setLastRoute":
+      return { ..._state, lastRoute: action.payload };
+    case "resume": {
+      if (_state.answerTimer.startedAt && _state.answerTimer.pausedAt) {
+        const pauseDelta = Date.now() - _state.answerTimer.pausedAt;
+        return withWinState({
+          ..._state,
+          status: "ready",
+          stopped: false,
+          answerTimer: {
+            ..._state.answerTimer,
+            pausedAt: null,
+            pausedTotalMs: _state.answerTimer.pausedTotalMs + pauseDelta,
+          },
+        });
+      }
+
+      return withWinState({ ..._state, status: "ready", stopped: false });
+    }
     case "stop":
+      if (_state.answerTimer.startedAt && !_state.answerTimer.pausedAt) {
+        return {
+          ..._state,
+          status: "stopped",
+          stopped: true,
+          answerTimer: {
+            ..._state.answerTimer,
+            pausedAt: Date.now(),
+          },
+        };
+      }
       return { ..._state, status: "stopped", stopped: true };
     case "reset":
       return { ...initialEmptyState };

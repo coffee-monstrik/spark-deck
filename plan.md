@@ -42,7 +42,7 @@ Goal: Build the two-player Spark Deck game per project_description.md using Next
 - Final page when entire deck is exhausted: display completion message and stop control.
 - Tests: simulate exhaustion of drawn categories vs entire deck to ensure correct screen and branching.
 
-## Step 8: Stop/summary page and transcript
+## Step 8: Stop/summary page and transcript - done!
 - Show player stats: turns taken, categories chosen, questions answered per player, ordered action log.
 - Provide option to email transcript (e.g., `mailto:` link prefilled with log text; placeholder for future SMTP/service integration).
 - Tests: log formatting matches recorded actions; email link contains transcript snippet.

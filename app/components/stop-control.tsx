@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { useGameStore } from "@/lib/game/store";
 
@@ -12,8 +12,10 @@ type Props = {
 export const StopControl = ({ label = "Stop now", variant = "link" }: Props) => {
   const { dispatch } = useGameStore();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleClick = () => {
+    dispatch({ type: "setLastRoute", payload: pathname });
     dispatch({ type: "stop" });
     router.push("/stop");
   };

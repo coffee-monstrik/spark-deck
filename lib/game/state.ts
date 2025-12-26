@@ -31,10 +31,17 @@ export type GameState = {
   remainingCategories: CategoryStack[];
   selectedCategory: string | null;
   currentCard: DeckCard | null;
+  answerTimer: {
+    startedAt: number | null;
+    pausedAt: number | null;
+    pausedTotalMs: number;
+  };
+  answerDurations: Record<PlayerId, number[]>;
   answeredCount: number;
   log: string[];
   winState: WinState;
   stopped: boolean;
+  lastRoute: string | null;
 };
 
 export type StartConfig = {
@@ -172,10 +179,20 @@ export const createInitialGameState = (config: StartConfig): GameState => {
     remainingCategories,
     selectedCategory: null,
     currentCard: null,
+    answerTimer: {
+      startedAt: null,
+      pausedAt: null,
+      pausedTotalMs: 0,
+    },
+    answerDurations: {
+      player1: [],
+      player2: [],
+    },
     answeredCount: 0,
     log: [],
     winState: "none",
     stopped: false,
+    lastRoute: null,
   };
 };
 
@@ -203,10 +220,20 @@ export const initialEmptyState: GameState = {
   remainingCategories: [],
   selectedCategory: null,
   currentCard: null,
+  answerTimer: {
+    startedAt: null,
+    pausedAt: null,
+    pausedTotalMs: 0,
+  },
+  answerDurations: {
+    player1: [],
+    player2: [],
+  },
   answeredCount: 0,
   log: [],
   winState: "none",
   stopped: false,
+  lastRoute: null,
 };
 
 export const countCardsInStacks = (stacks: CategoryStack[]): number =>
