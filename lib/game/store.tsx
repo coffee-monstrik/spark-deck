@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 
 import {
   CategoryStack,
+  CATEGORY_PALETTE,
   GameState,
   StartConfig,
   createInitialGameState,
@@ -111,8 +112,8 @@ const reshuffleCategories = (state: GameState): GameState => {
   const pool = shuffleStacks([...state.drawnCategories, ...state.remainingCategories]);
   const drawnCategories = applyDistinctColors(
     pool.slice(0, 4),
-    state.deck.theme.categoriesColors,
-    state.deck.theme.primary,
+    CATEGORY_PALETTE,
+    CATEGORY_PALETTE[0],
   );
   const remainingCategories = pool.slice(drawnCategories.length);
 
@@ -132,8 +133,8 @@ const repopulateAfterExhaustion = (state: GameState): GameState => {
   const pool = shuffleStacks(available);
   const drawnCategories = applyDistinctColors(
     pool.slice(0, 4),
-    state.deck.theme.categoriesColors,
-    state.deck.theme.primary,
+    CATEGORY_PALETTE,
+    CATEGORY_PALETTE[0],
   );
   const remainingCategories = pool.slice(drawnCategories.length);
 

@@ -35,9 +35,6 @@ export default function FinalPage() {
         <section className="win-hero">
           <p className="eyebrow">Game complete</p>
           <h1 className="page-title">You answered every question!</h1>
-          <p className="win-subtitle">
-            Great streak! You can pull in fresh categories or wrap up now.
-          </p>
         </section>
 
         <section className="win-summary final">
@@ -51,7 +48,7 @@ export default function FinalPage() {
           </div>
         </section>
 
-        <div className="center-row win-actions">
+        <div className="center-row action-row">
           <StopControl variant="button" label="Go to summary" />
           <button type="button" className="secondary-link" onClick={handleRestart}>
             Start a new game

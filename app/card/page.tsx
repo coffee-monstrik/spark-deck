@@ -7,7 +7,6 @@ import { GameGuard } from "../components/game-guard";
 import { GameLayout } from "../components/game-layout";
 import { StopControl } from "../components/stop-control";
 import { useGameStore } from "@/lib/game/store";
-import styles from "./card.module.css";
 
 export default function CardPage() {
   const { state, dispatch } = useGameStore();
@@ -91,7 +90,6 @@ export default function CardPage() {
   };
 
   const cardsRemaining = selectedStack?.cards.length ?? 0;
-  const categoryColor = selectedStack?.color || "var(--deck-primary, #0b7285)";
   const categoryLabel = state.selectedCategory ?? "Category";
   const currentPlayerName = state.players[state.currentPlayer].name;
   const elapsedLabel = formatDuration(getElapsedMs());
@@ -99,32 +97,29 @@ export default function CardPage() {
   return (
     <GameGuard>
       <GameLayout>
-        <section className={styles.header}>
-          <div>
-            <h1 className="page-title">{categoryLabel}</h1>
-          </div>
+        <section className="section">
+          <h1 className="page-title">{categoryLabel}</h1>
         </section>
 
-        <article className={styles.cardPanel}>
-
-          <div className={styles.questionBox}>
-            <p className={styles.questionText}>{state.currentCard?.text ?? "No card available."}</p>
-            <p className={styles.timerText}>Time on this question: {elapsedLabel}</p>
+        <article className="panel">
+          <div className="question-box">
+            <p>{state.currentCard?.text ?? "No card available."}</p>
+            <p className="copy copy-small">Time on this question: {elapsedLabel}</p>
           </div>
 
-          <div className={styles.metaRow}>
-            <p className={styles.metaText}>
+          <div className="meta-row">
+            <p className="copy">
               Answering: <strong>{currentPlayerName}</strong>
             </p>
-            <p className={styles.metaText}>
+            <p className="copy">
               Cards left in this category: <strong>{cardsRemaining}</strong>
             </p>
           </div>
 
-          <div className={styles.actions}>
+          <div className="center-row">
             <button
               type="button"
-              className={styles.primaryButton}
+              className="primary-link"
               onClick={handleAnswer}
               disabled={!state.currentCard}
             >
@@ -133,7 +128,7 @@ export default function CardPage() {
           </div>
         </article>
 
-        <div className={'bottomBar'}>
+        <div className="bottomBar">
           <StopControl variant="button" />
           <div className="answered-chip">
             Answered: <strong>{state.answeredCount}</strong>

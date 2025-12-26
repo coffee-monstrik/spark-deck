@@ -8,7 +8,6 @@ import { GameGuard } from "../components/game-guard";
 import { GameLayout } from "../components/game-layout";
 import { StopControl } from "../components/stop-control";
 import { useGameStore } from "@/lib/game/store";
-import styles from "./stop.module.css";
 
 export default function StopPage() {
   const { state, dispatch } = useGameStore();
@@ -87,11 +86,11 @@ export default function StopPage() {
         <section className="game-header">
           <div>
             <p className="eyebrow">Game paused</p>
-            <h1 className="page-title">Stop &amp; summary</h1>
+            <h1 className="page-title">Stop &amp; Summary</h1>
           </div>
         </section>
 
-        <div className={styles.actionRow}>
+        <div className="center-row action-row">
           <Link className="secondary-link" href={state.lastRoute ?? "/categories"} onClick={handleContinue}>
             Continue playing
           </Link>
@@ -104,13 +103,13 @@ export default function StopPage() {
           </Link>
         </div>
 
-        <section className={styles.summarySection}>
+        <section>
           <h2 className="page-title">Player stats</h2>
-          <div className={styles.summaryGrid}>
+          <div className="stats-grid">
             {playerStats.map((player) => (
-              <div key={player.id} className={`stat-card ${styles.playerCard}`}>
-                <p className={styles.playerName}>{player.name}</p>
-                <ul className={styles.statList}>
+              <div key={player.id} className="stat-card">
+                <h3 className="section-title">{player.name}</h3>
+                <ul className="stat-list">
                   <li>Questions answered: {player.questionsAnswered}</li>
                   <li>
                     Longest answer:{" "}
@@ -128,25 +127,22 @@ export default function StopPage() {
           </div>
         </section>
 
-        <section className={styles.transcriptPanel}>
-          <div className={styles.transcriptHeader}>
-            <h3 className={styles.transcriptTitle}>Transcript</h3>
-            <p className={styles.transcriptSubtitle}>
-              Ordered log of every category pick and question answered this round.
-            </p>
+        <section className="panel">
+          <div>
+            <h3 className="section-title">Transcript</h3>
           </div>
 
           {transcriptEntries.length === 0 ? (
-            <p className={styles.logEmpty}>No actions logged yet.</p>
+            <p className="copy copy-small">No actions logged yet.</p>
           ) : (
-            <ol className={styles.logList}>
+            <ol className="log-list">
               {transcriptEntries.map((entry, index) => (
                 <li key={`${entry}-${index}`}>{entry}</li>
               ))}
             </ol>
           )}
 
-          <button type="button" className={styles.emailDisabled} disabled>
+          <button type="button" className="secondary-link" disabled>
             Email transcript (coming soon)
           </button>
         </section>

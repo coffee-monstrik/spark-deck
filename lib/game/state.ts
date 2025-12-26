@@ -52,6 +52,7 @@ export type StartConfig = {
 
 const DEFAULT_PLAYER_ONE = "Me";
 const DEFAULT_PLAYER_TWO = "You";
+export const CATEGORY_PALETTE = ["#C46149", "#D98B6E", "#FCD3C2", "#E6B29E"];
 
 const shuffle = <T,>(input: T[]): T[] => {
   const result = [...input];
@@ -128,10 +129,7 @@ const buildCategoryStacks = (
   shuffledCards: DeckCard[],
 ): CategoryStack[] => {
   return deck.categories.map((category, index) => {
-    const color =
-      deck.theme.categoriesColors[
-        index % Math.max(1, deck.theme.categoriesColors.length)
-      ];
+    const color = CATEGORY_PALETTE[index % CATEGORY_PALETTE.length];
     const cards = shuffledCards.filter(
       (card) => card.category.toLowerCase() === category.toLowerCase(),
     );
@@ -157,8 +155,8 @@ export const createInitialGameState = (config: StartConfig): GameState => {
 
   const drawnCategories = assignCategoryColors(
     categoryStacks.slice(0, 4),
-    config.deck.theme.categoriesColors,
-    config.deck.theme.primary,
+    CATEGORY_PALETTE,
+    CATEGORY_PALETTE[0],
   );
   const remainingCategories = categoryStacks.slice(drawnCategories.length);
 

@@ -36,9 +36,9 @@ export default function WinPage() {
       <GameLayout>
         <section className="win-hero">
           <p className="eyebrow">Milestone</p>
-          <h1 className="page-title">You’ve cleared the drawn categories</h1>
+          <h1 className="page-title">All the categories are cleared</h1>
           <p className="win-subtitle">
-            Great streak! You can pull in fresh categories or wrap up now.
+            You can stop here or wrap up now.
           </p>
         </section>
 
@@ -59,18 +59,13 @@ export default function WinPage() {
           </div>
         </div>
 
-        <div className="center-row win-actions">
+        <div className="center-row action-row">
           <Link className="primary-link" href="/categories" onClick={handleContinue}>
             Continue anyway
           </Link>
           <StopControl variant="button" label="Stop here" />
         </div>
 
-        <div className={'bottomBar'}>
-          <div className="answered-chip">
-            Answered: <strong>{state.answeredCount}</strong>
-          </div>
-        </div>
       </GameLayout>
     </GameGuard>
   );

@@ -8,7 +8,6 @@ import { GameLayout } from "../components/game-layout";
 import { StopControl } from "../components/stop-control";
 import { useGameStore } from "@/lib/game/store";
 import { CategoryStack, isCategoryDepleted } from "@/lib/game/state";
-import styles from "./categories.module.css";
 
 export default function CategoriesPage() {
   const { state, dispatch } = useGameStore();
@@ -50,13 +49,11 @@ export default function CategoriesPage() {
     <GameGuard>
       <GameLayout>
 
-        <section className={styles.prompt}>
-          <div>
-            <h2 className={styles.promptTitle}>{state.players[state.currentPlayer].name}: Choose a category</h2>
-          </div>
+        <section className="section">
+          <h2 className="section-title">{state.players[state.currentPlayer].name}: Choose a category</h2>
         </section>
 
-        <div className={styles.grid}>
+        <div className="tile-grid">
           {state.drawnCategories.map((stack) => {
             const depleted = isCategoryDepleted(stack);
             const cardsLeft = stack.cards.length;
@@ -69,27 +66,26 @@ export default function CategoriesPage() {
               <button
                 key={stack.name}
                 type="button"
-                className={`${styles.tile} ${depleted ? styles.tileDisabled : ""}`}
+                className={`tile ${depleted ? "is-disabled" : ""}`}
                 onClick={() => handleCategoryClick(stack)}
                 disabled={depleted}
                 aria-disabled={depleted}
                 style={
-                  {
-                    "--tile-color": depleted ? "var(--deck-disabled, #ced4da)" : stack.color,
-                    "--tile-ink": depleted ? "var(--deck-text, #0f172a)" : "#ffffff",
-                  } as CSSProperties
+                  depleted
+                    ? undefined
+                    : ({
+                        "--tile-color": stack.color,
+                      } as CSSProperties)
                 }
               >
-                <div className={styles.tileHeading}>
-                  <p className={styles.tileName}>{stack.name}</p>
-                </div>
-                <p className={styles.tileMeta}>{label}</p>
+                <h3>{stack.name}</h3>
+                <p>{label}</p>
               </button>
             );
           })}
         </div>
 
-        <div className={'bottomBar'}>
+        <div className="bottomBar">
           <StopControl variant="button" />
           <div className="answered-chip">
             Answered: <strong>{state.answeredCount}</strong>
